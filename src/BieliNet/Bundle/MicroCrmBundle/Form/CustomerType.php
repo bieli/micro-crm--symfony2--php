@@ -15,20 +15,21 @@ class CustomerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('sellerId')
             ->add('name')
             ->add('surname')
             ->add('pesel')
-            ->add('email')
+//            ->add('email')
             ->add('phone')
-            ->add('phone2')
-            ->add('description')
-            ->add('type')
-            ->add('source')
-            ->add('sourceType')
-            ->add('createdAt')
+//            ->add('phone2')
+//            ->add('description')
+//            ->add('type')
+//            ->add('source')
+//            ->add('sourceType')
+//            ->add('createdAt')
         ;
     }
-    
+
     /**
      * @param OptionsResolverInterface $resolver
      */

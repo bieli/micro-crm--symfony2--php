@@ -25,6 +25,13 @@ class Customer
     private $id;
 
     /**
+     * @var int $selletId
+     *
+     * @ORM\Column(name="seller_id", type="smallint", nullable=false)
+     */
+    private $sellerId;
+
+    /**
      * @var string $name
      *
      * @ORM\Column(name="name", type="string", length=32, unique=false, nullable=false)
@@ -123,6 +130,28 @@ class Customer
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set seller id
+     *
+     * @return Customer
+     */
+    public function setSellerId($sellerId)
+    {
+        $this->sellerId = $sellerId;
+
+        return $this;
+    }
+
+    /**
+     * Get seller id
+     *
+     * @return integer 
+     */
+    public function getSellerId()
+    {
+        return $this->sellerId;
     }
 
     /**
