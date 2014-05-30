@@ -1,0 +1,5 @@
+bieli_net_micro_crm:
+    resource: "@BieliNetMicroCrmBundle/Controller/"
+    type:     annotation
+    prefix:   /micro-crm
+
