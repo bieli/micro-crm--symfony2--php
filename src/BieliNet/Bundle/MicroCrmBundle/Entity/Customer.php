@@ -310,6 +310,52 @@ class Customer
     }
 
     /**
+     * Set source
+     *
+     * @param int $source
+     * @return Customer
+     */
+    public function setSource($source)
+    {
+        $this->source = $source;
+
+        return $this;
+    }
+
+    /**
+     * Get source
+     *
+     * @return int
+     */
+    public function getSource()
+    {
+        return $this->source;
+    }
+
+    /**
+     * Set source type
+     *
+     * @param int $sourceType
+     * @return Customer
+     */
+    public function setSourceType($sourceType)
+    {
+        $this->sourceType = $sourceType;
+
+        return $this;
+    }
+
+    /**
+     * Get source type
+     *
+     * @return int
+     */
+    public function getSourceType()
+    {
+        return $this->sourceType;
+    }
+
+    /**
      * Set createdAt
      *
      * @param DateTime $createdAt
