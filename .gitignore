@@ -11,6 +11,8 @@ vendor/*
 */cache/*
 web/uploads/*
 web/bundles/*
+web/css/*
+web/js/*
 
 # Configuration files
 app/config/parameters.ini

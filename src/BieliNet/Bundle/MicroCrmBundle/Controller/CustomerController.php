@@ -3,6 +3,7 @@
 namespace BieliNet\Bundle\MicroCrmBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -19,6 +20,31 @@ class CustomerController extends Controller
 {
 
     /**
+     * @Route("/create-test")
+     * @Method("GET")
+     * @Template("")
+     */
+	public function createTestAction()
+	{
+	    $customer = new Customer();
+	    $customer->setName('Alaa ' . rand(100, 10000) .'');
+	    $customer->setSurname('Kotoałśkąjaźż ' . rand(100, 10000) .'');
+	    $customer->setDescription('' . rand(100, 10000) .'aLorem ipsum dolor');
+	    $customer->setEmail('alass_' . rand(100, 10000) .'@wp.pl');
+        $customer->setPhone('123123121' . rand(100, 10000));
+        $customer->setSellerId(12);
+        $customer->setPesel('0634234' . rand(100, 10000) .'');
+        $customer->setCreatedAt(new \DateTime());
+//die('aaaa');
+	    $em = $this->getDoctrine()->getManager();
+	    $em->persist($customer);
+	    $em->flush();
+
+//$this->generateUrl('customer_show', array('id' => $entity->getId()))
+	    return new Response('Created customer id ' . $customer->getId());
+	}
+
+    /**
      * Lists all Customer entities.
      *
      * @Route("/", name="customer")
@@ -27,8 +53,11 @@ class CustomerController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+//        $em = $this->getDoctrine()->getManager();
 
+        $em = $this->getDoctrine()->getEntityManager();
+        $platform = $em->getConnection()->getDatabasePlatform();
+        $platform->registerDoctrineTypeMapping('enum', 'string');
         $entities = $em->getRepository('BieliNetMicroCrmBundle:Customer')->findAll();
 
         return array(

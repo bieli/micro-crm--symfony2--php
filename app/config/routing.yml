@@ -3,3 +3,10 @@ bieli_net_micro_crm:
     type:     annotation
     prefix:   /micro-crm
 
+MopaBootstrapSandbox:
+    resource: "@MopaBootstrapSandboxBundle/Resources/config/routing.yml"
+
+#liip_theme:
+#    resource: "@LiipThemeBundle/Resources/config/routing.xml"
+#    prefix: /theme
+

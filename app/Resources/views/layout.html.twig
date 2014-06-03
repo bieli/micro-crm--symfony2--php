@@ -1,0 +1,60 @@
+{% extends 'MopaBootstrapSandboxBundle::base.html.twig' %}
+
+{% block title %}ExampleBundle{% endblock %}
+
+{% block head_style %}
+
+    {% stylesheets
+        '@MopaBootstrapBundle/Resources/public/less/mopabootstrapbundle.less'
+        '%kernel.root_dir%/../vendor/datatables/datatables/examples/resources/bootstrap/3/dataTables.bootstrap.css'
+        output = 'css/styles.css'
+        filter = 'cssembed, ?yui_css'
+    %}
+        <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+
+{% endblock head_style %}
+
+{% block head_script %}
+
+    {% javascripts
+        '%kernel.root_dir%/../vendor/components/jquery/jquery.js'
+        output = 'js/jquery.js'
+        filter = '?yui_js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+{% endblock head_script %}
+
+{% block foot_script_assetic %}
+
+    {% javascripts
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/tooltip.js'
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/affix.js'
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/alert.js'
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/button.js'
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/carousel.js'
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/collapse.js'
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/dropdown.js'
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/modal.js'
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/popover.js'
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/scrollspy.js'
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/tab.js'
+        '@MopaBootstrapBundle/Resources/public/bootstrap/js/transition.js'
+        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
+        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
+        '@FOSJsRoutingBundle/Resources/public/js/router.js'
+        '%kernel.root_dir%/../vendor/datatables/datatables/media/js/jquery.dataTables.js'
+        '%kernel.root_dir%/../vendor/datatables/datatables/examples/resources/bootstrap/3/dataTables.bootstrap.js'
+        '%kernel.root_dir%/../vendor/moment/moment/moment.js'
+        '%kernel.root_dir%/../vendor/moment/moment/lang/de.js'
+        output = 'js/scripts.js'
+        filter = '?yui_js'
+    %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
+{% endblock foot_script_assetic %}
