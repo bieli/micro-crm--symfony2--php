@@ -7,8 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Pagerfanta\Pagerfanta;
+use Pagerfanta\Adapter\DoctrineORMAdapter;
+use Pagerfanta\View\TwitterBootstrapView;
+
 use BieliNet\Bundle\MicroCrmBundle\Entity\Event;
 use BieliNet\Bundle\MicroCrmBundle\Form\EventType;
+use BieliNet\Bundle\MicroCrmBundle\Form\EventFilterType;
 
 /**
  * Event controller.
@@ -17,7 +22,6 @@ use BieliNet\Bundle\MicroCrmBundle\Form\EventType;
  */
 class EventController extends Controller
 {
-
     /**
      * Lists all Event entities.
      *
@@ -27,14 +31,17 @@ class EventController extends Controller
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        list($filterForm, $queryBuilder) = $this->filter();
 
-        $entities = $em->getRepository('BieliNetMicroCrmBundle:Event')->findAll();
+        list($entities, $pagerHtml) = $this->paginator($queryBuilder);
 
         return array(
             'entities' => $entities,
+            'pagerHtml' => $pagerHtml,
+            'filterForm' => $filterForm->createView(),
         );
     }
+
 
     /**
      * Lists all Event entities.
@@ -45,13 +52,95 @@ class EventController extends Controller
      */
     public function indexCustomerAction($id)
     {
+        $filterForm = $this->createForm(new EventFilterType());
         $em = $this->getDoctrine()->getManager();
+        $queryBuilder = $em->getRepository('BieliNetMicroCrmBundle:Event')->createQueryBuilder('e');
+//TODO: refactor method
+        list($filterForm, $queryBuilder) = $this->filter();
 
+        list($entities, $pagerHtml) = $this->paginator($queryBuilder);
+        
         $entities = $em->getRepository('BieliNetMicroCrmBundle:Event')->findByCustomer($id);
 
         return array(
             'entities' => $entities,
+            'pagerHtml' => $pagerHtml,
+            'filterForm' => $filterForm->createView(),
         );
+    }
+
+
+    /**
+    * Create filter form and process filter request.
+    *
+    */
+    protected function filter()
+    {
+        $request = $this->getRequest();
+        $session = $request->getSession();
+        $filterForm = $this->createForm(new EventFilterType());
+        $em = $this->getDoctrine()->getManager();
+        $queryBuilder = $em->getRepository('BieliNetMicroCrmBundle:Event')->createQueryBuilder('e');
+
+        // Reset filter
+        if ($request->get('filter_action') == 'reset') {
+            $session->remove('EventControllerFilter');
+        }
+
+        // Filter action
+        if ($request->get('filter_action') == 'filter') {
+            // Bind values from the request
+            $filterForm->bind($request);
+
+            if ($filterForm->isValid()) {
+                // Build the query from the given form object
+                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
+                // Save filter to session
+                $filterData = $filterForm->getData();
+                $session->set('EventControllerFilter', $filterData);
+            }
+        } else {
+            // Get filter from session
+            if ($session->has('EventControllerFilter')) {
+                $filterData = $session->get('EventControllerFilter');
+                $filterForm = $this->createForm(new EventFilterType(), $filterData);
+                $this->get('lexik_form_filter.query_builder_updater')->addFilterConditions($filterForm, $queryBuilder);
+            }
+        }
+
+        return array($filterForm, $queryBuilder);
+    }
+
+    /**
+    * Get results from paginator and get paginator view.
+    *
+    */
+    protected function paginator($queryBuilder)
+    {
+        // Paginator
+        $adapter = new DoctrineORMAdapter($queryBuilder);
+        $pagerfanta = new Pagerfanta($adapter);
+        $currentPage = $this->getRequest()->get('page', 1);
+        $pagerfanta->setCurrentPage($currentPage);
+        $entities = $pagerfanta->getCurrentPageResults();
+
+        // Paginator - route generator
+        $me = $this;
+        $routeGenerator = function($page) use ($me)
+        {
+            return $me->generateUrl('event', array('page' => $page));
+        };
+
+        // Paginator - view
+        $translator = $this->get('translator');
+        $view = new TwitterBootstrapView();
+        $pagerHtml = $view->render($pagerfanta, $routeGenerator, array(
+            'proximity' => 3,
+            'prev_message' => $translator->trans('views.index.pagprev', array(), 'JordiLlonchCrudGeneratorBundle'),
+            'next_message' => $translator->trans('views.index.pagnext', array(), 'JordiLlonchCrudGeneratorBundle'),
+        ));
+
+        return array($entities, $pagerHtml);
     }
 
     /**
@@ -63,14 +152,15 @@ class EventController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Event();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+        $entity  = new Event();
+        $form = $this->createForm(new EventType(), $entity);
+        $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.create.success');
 
             return $this->redirect($this->generateUrl('event_show', array('id' => $entity->getId())));
         }
@@ -79,25 +169,6 @@ class EventController extends Controller
             'entity' => $entity,
             'form'   => $form->createView(),
         );
-    }
-
-    /**
-    * Creates a form to create a Event entity.
-    *
-    * @param Event $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createCreateForm(Event $entity)
-    {
-        $form = $this->createForm(new EventType(), $entity, array(
-            'action' => $this->generateUrl('event_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
     }
 
     /**
@@ -110,7 +181,7 @@ class EventController extends Controller
     public function newAction()
     {
         $entity = new Event();
-        $form   = $this->createCreateForm($entity);
+        $form   = $this->createForm(new EventType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -160,7 +231,7 @@ class EventController extends Controller
             throw $this->createNotFoundException('Unable to find Event entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createForm(new EventType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -170,24 +241,6 @@ class EventController extends Controller
         );
     }
 
-    /**
-    * Creates a form to edit a Event entity.
-    *
-    * @param Event $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Event $entity)
-    {
-        $form = $this->createForm(new EventType(), $entity, array(
-            'action' => $this->generateUrl('event_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
     /**
      * Edits an existing Event entity.
      *
@@ -206,13 +259,17 @@ class EventController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
+        $editForm = $this->createForm(new EventType(), $entity);
+        $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            $em->persist($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.update.success');
 
             return $this->redirect($this->generateUrl('event_edit', array('id' => $id)));
+        } else {
+            $this->get('session')->getFlashBag()->add('error', 'flash.update.error');
         }
 
         return array(
@@ -221,6 +278,7 @@ class EventController extends Controller
             'delete_form' => $deleteForm->createView(),
         );
     }
+
     /**
      * Deletes a Event entity.
      *
@@ -230,7 +288,7 @@ class EventController extends Controller
     public function deleteAction(Request $request, $id)
     {
         $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
+        $form->bind($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -242,6 +300,9 @@ class EventController extends Controller
 
             $em->remove($entity);
             $em->flush();
+            $this->get('session')->getFlashBag()->add('success', 'flash.delete.success');
+        } else {
+            $this->get('session')->getFlashBag()->add('error', 'flash.delete.error');
         }
 
         return $this->redirect($this->generateUrl('event'));
@@ -252,14 +313,12 @@ class EventController extends Controller
      *
      * @param mixed $id The entity id
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Symfony\Component\Form\Form The form
      */
     private function createDeleteForm($id)
     {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('event_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+        return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
             ->getForm()
         ;
     }

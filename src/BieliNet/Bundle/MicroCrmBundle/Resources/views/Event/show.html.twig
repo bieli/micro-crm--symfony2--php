@@ -1,44 +1,49 @@
-{% extends '::base.html.twig' %}
+{% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
 
-{% block body -%}
-    <h1>Event</h1>
+{% block title %}
+{{ parent() }} - {{ 'views.show.show'|trans({'%entity%': 'Event'}, 'JordiLlonchCrudGeneratorBundle') }}
+{% endblock %}
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Customerid</th>
-                <td>{{ entity.customerId }}</td>
-            </tr>
-            <tr>
-                <th>Eventtypeid</th>
-                <td>{{ entity.eventTypeId }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ entity.description }}</td>
-            </tr>
-            <tr>
-                <th>Createdat</th>
-                <td>{{ entity.createdAt|date('Y-m-d H:i:s') }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block page %}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('event') }}">
-            Back to the list
+<h1>Event</h1>
+
+<form class="form-horizontal">
+    <fieldset>        <div class="control-group">
+            <label class="control-label">Id</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.id }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Customerid</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.customerId }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Eventtypeid</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.eventTypeId }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Description</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.description }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Createdat</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.createdAt|date('Y-m-d H:i:s') }}</span>            </div>
+        </div>    </fieldset>
+</form>
+
+<div>
+    <div class="float-left">
+        <a class="btn" href="{{ path('event') }}">
+            {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
         </a>
-    </li>
-    <li>
-        <a href="{{ path('event_edit', { 'id': entity.id }) }}">
-            Edit
+    </div>
+    <div class="float-left">
+        <a class="btn btn-primary" href="{{ path('event_edit', { 'id': entity.id }) }}">
+            {{ 'views.recordactions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
         </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    </div>
+    <div class="float-left">
+        <form action="{{ path('event_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button class="btn btn-danger" type="submit" onclick="return confirm('{{ 'views.recordactions.confirm'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}');">{{ 'views.recordactions.delete'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+        </form>
+    </div>
+</div>
 {% endblock %}

@@ -8,25 +8,18 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class EventType extends AbstractType
 {
-        /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
 //            ->add('customerId')
 //            ->add('eventTypeId')
-            ->add('description')
-            ->add('createdAt')
             ->add('customer')
             ->add('eventType')
+            ->add('description')
+            ->add('createdAt')
         ;
     }
-    
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -34,9 +27,6 @@ class EventType extends AbstractType
         ));
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'bielinet_bundle_microcrmbundle_event';

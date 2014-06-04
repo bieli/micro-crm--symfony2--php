@@ -32,7 +32,7 @@ class Event
     private $customerId;
 
     /**
-     * @var eventType
+     * @var Customer
      *
      * @ORM\ManyToOne(targetEntity="Customer")
      * @ORM\JoinColumn(name="customer_id", referencedColumnName="id")

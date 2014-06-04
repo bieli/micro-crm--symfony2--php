@@ -8,32 +8,29 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class CustomerType extends AbstractType
 {
-        /**
-     * @param FormBuilderInterface $builder
-     * @param array $options
-     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sellerId')
+//            ->add('customerTypeId')
+//            ->add('sellerId')
+            ->add('customerType')
+            ->add('seller')
             ->add('name')
             ->add('surname')
             ->add('pesel')
             ->add('email')
             ->add('phone')
+            ->add('phone2')
+            ->add('description')
+            ->add('type')
+            ->add('source')
+            ->add('sourceType')
+            ->add('createdAt')
             ->add('customerType')
-//            ->add('phone2')
-//            ->add('description')
-//            ->add('type')
-//            ->add('source')
-//            ->add('sourceType')
-//            ->add('createdAt')
+            ->add('seller')
         ;
     }
 
-    /**
-     * @param OptionsResolverInterface $resolver
-     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
@@ -41,9 +38,6 @@ class CustomerType extends AbstractType
         ));
     }
 
-    /**
-     * @return string
-     */
     public function getName()
     {
         return 'bielinet_bundle_microcrmbundle_customer';

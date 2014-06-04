@@ -25,7 +25,7 @@ DROP TABLE IF EXISTS `customer`;
 CREATE TABLE `customer` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_type_id` int(11) NOT NULL,
-  `seller_id` smallint(6) NOT NULL,
+  `seller_id` int(11) NOT NULL,
   `name` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `surname` varchar(32) COLLATE utf8_unicode_ci NOT NULL,
   `pesel` varchar(16) COLLATE utf8_unicode_ci NOT NULL,
@@ -44,6 +44,7 @@ CREATE TABLE `customer` (
   UNIQUE KEY `UNIQ_81398E09E2F35FF3` (`phone2`),
   KEY `IDX_81398E09D991282D` (`customer_type_id`),
   KEY `IDX_81398E098DE820D9` (`seller_id`),
+  CONSTRAINT `FK_81398E098DE820D9` FOREIGN KEY (`seller_id`) REFERENCES `seller` (`id`),
   CONSTRAINT `FK_81398E09D991282D` FOREIGN KEY (`customer_type_id`) REFERENCES `customer_type` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -54,7 +55,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (1,2,1,'Janek','Kowalski','771112','janek.kowalski123123@o2.pl','22997876232',NULL,NULL,NULL,NULL,NULL,'2014-06-04 21:19:40'),(2,1,1,'Juzek','Trzmiałek','80090523142','juzek.123@waw.pl','487765231',NULL,NULL,NULL,NULL,NULL,'2014-06-04 21:21:24');
+INSERT INTO `customer` VALUES (1,1,1,'Janek','Kowalski','80090523142','qwqw@wew.pl','12312312312',NULL,NULL,NULL,NULL,NULL,'2014-06-05 00:01:00'),(2,2,2,'Juzek','Trzmiałek','77111212345','juzek.123@waw.pl','123234459',NULL,NULL,NULL,NULL,NULL,'2014-06-05 01:03:00');
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,14 +95,14 @@ CREATE TABLE `event` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
   `event_type_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL,
   `description` tinytext COLLATE utf8_unicode_ci,
+  `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   KEY `IDX_3BAE0AA79395C3F3` (`customer_id`),
   KEY `IDX_3BAE0AA7401B253C` (`event_type_id`),
   CONSTRAINT `FK_3BAE0AA7401B253C` FOREIGN KEY (`event_type_id`) REFERENCES `event_type` (`id`),
   CONSTRAINT `FK_3BAE0AA79395C3F3` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -110,7 +111,7 @@ CREATE TABLE `event` (
 
 LOCK TABLES `event` WRITE;
 /*!40000 ALTER TABLE `event` DISABLE KEYS */;
-INSERT INTO `event` VALUES (1,2,4,'2014-06-02 21:52:00','złożyłem ofertę osobiście'),(2,2,2,'2014-06-02 15:38:00','sygnal od k. że zmienił pracę - czekam na nowe dane'),(3,2,4,'2014-06-04 21:55:00','przesylam poprawiona oferte'),(4,1,6,'2014-06-04 22:26:00','zainteresowanie zarabianiem na procentach z oszczednosci'),(5,1,6,'2014-06-04 23:05:00','w sprawie załącznika nr. 3 do umowy kredytowej');
+INSERT INTO `event` VALUES (1,2,4,'złożyłem ofertę osobiście','2014-06-02 21:52:00'),(2,2,2,'sygnal od k. że zmienił pracę - czekam na nowe dane','2014-06-02 15:38:00'),(3,2,4,'przesylam poprawiona oferte','2014-06-04 21:55:00'),(4,1,6,'zainteresowanie zarabianiem na procentach z oszczednosci','2014-06-04 22:26:00'),(5,1,8,'w sprawie załącznika nr. 3 do umowy kredytowej','2014-06-04 23:05:00');
 /*!40000 ALTER TABLE `event` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -158,6 +159,7 @@ CREATE TABLE `seller` (
   `created_at` datetime NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_FB1AD3FCE7927C74` (`email`),
+  UNIQUE KEY `UNIQ_FB1AD3FCD27CB92A` (`activity_hash`),
   UNIQUE KEY `UNIQ_FB1AD3FC444F97DD` (`phone`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -168,7 +170,7 @@ CREATE TABLE `seller` (
 
 LOCK TABLES `seller` WRITE;
 /*!40000 ALTER TABLE `seller` DISABLE KEYS */;
-INSERT INTO `seller` VALUES (1,'Marcin','Bielak','marcin.bieli@gmail.com','507447883','a','b',1,'2014-06-04 22:56:36'),(2,'Sargon','Abdalla','sargon.abdalla@wp.eu','','b','c',1,'2014-06-04 22:56:36');
+INSERT INTO `seller` VALUES (1,'Marcin','Bielak','marcin.bieli@gmail.com','123456234','538f913ad46ba','e29aed2ea94ee9d938b3e9cac081665b',1,'2014-06-04 23:33:00'),(2,'Jan','Kowal','Jan.Kowal@wp.pl','234345454','538f91b35c6c4','7907b11c06053e9d3e4852f0145c7018',1,'2014-06-04 23:37:00');
 /*!40000 ALTER TABLE `seller` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,4 +208,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-06-04 23:30:14
+-- Dump completed on 2014-06-05  1:33:53
