@@ -25,11 +25,34 @@ class Customer
     private $id;
 
     /**
-     * @var int $selletId
+     * @var integer $customerTypeId
      *
-     * @ORM\Column(name="seller_id", type="smallint", nullable=false)
+     * @ORM\Column(name="customer_type_id", type="integer", nullable=false)
+     */
+    private $customerTypeId;
+
+    /**
+     * @var CustomerType
+     *
+     * @ORM\ManyToOne(targetEntity="CustomerType")
+     * @ORM\JoinColumn(name="customer_type_id", referencedColumnName="id")
+     */
+    private $customerType;
+
+    /**
+     * @var int $sellerId
+     *
+     * @ORM\Column(name="seller_id", type="integer", nullable=false)
      */
     private $sellerId;
+
+    /**
+     * @var Seller
+     *
+     * @ORM\ManyToOne(targetEntity="Seller")
+     * @ORM\JoinColumn(name="seller_id", referencedColumnName="id")
+     */
+    private $seller;
 
     /**
      * @var string $name
@@ -37,8 +60,7 @@ class Customer
      * @ORM\Column(name="name", type="string", length=32, unique=false, nullable=false)
      *
      * @Asset\NotBlank
-     * @Asset\Length(min=4, max=32)
-     *
+     * @Asset\Length(min=2, max=32)
      */
     private $name;
 
@@ -46,6 +68,9 @@ class Customer
      * @var string
      *
      * @ORM\Column(name="surname", type="string", length=32, nullable=false)
+     *
+     * @Asset\NotBlank
+     * @Asset\Length(min=2, max=32)
      */
     private $surname;
 
@@ -71,6 +96,9 @@ class Customer
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=16, unique=true, nullable=true)
+     *
+     * @Asset\NotBlank
+     * @Asset\Length(min=6, max=16)
      */
     private $phone;
 
@@ -122,6 +150,11 @@ class Customer
         $this->createdAt = new \DateTime();
     }
 
+    public function __toString()
+    {
+        return ucfirst($this->name) . ' ' . ucfirst($this->surname);
+    }
+
     /**
      * Get id
      *
@@ -134,6 +167,8 @@ class Customer
 
     /**
      * Set seller id
+     *
+     * @param int $sellerId
      *
      * @return Customer
      */
@@ -152,6 +187,30 @@ class Customer
     public function getSellerId()
     {
         return $this->sellerId;
+    }
+
+    /**
+     * Set seller
+     *
+     * @param Seller $seller
+     *
+     * @return Customer
+     */
+    public function setSeller($seller)
+    {
+        $this->seller = $seller;
+
+        return $this;
+    }
+
+    /**
+     * Get seller
+     *
+     * @return Seller
+     */
+    public function getSeller()
+    {
+        return $this->seller;
     }
 
     /**
@@ -406,5 +465,52 @@ class Customer
     {
         return $this->createdAt;
     }
+
+    /**
+     * Set customer type id
+     *
+     * @param int $customerTypeId
+     * @return Customer
+     */
+    public function setCustomerTypeId($customerTypeId)
+    {
+        $this->customerTypeId = $customerTypeId;
+
+        return $this;
+    }
+
+    /**
+     * Get customer type id
+     *
+     * @return int
+     */
+    public function getCustomerTypeId()
+    {
+        return $this->customerTypeId;
+    }
+
+    /**
+     * Set customer type id
+     *
+     * @param CustomerType $customerType
+     * @return Customer
+     */
+    public function setCustomerType($customerType)
+    {
+        $this->customerType = $customerType;
+
+        return $this;
+    }
+
+    /**
+     * Get customer type id
+     *
+     * @return CustomerType
+     */
+    public function getCustomerType()
+    {
+        return $this->customerType;
+    }
 }
+
 

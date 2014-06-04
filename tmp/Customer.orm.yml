@@ -1,0 +1,102 @@
+BieliNet\Bundle\MicroCrmBundle\Entity\Customer:
+    type: entity
+    table: customer
+    uniqueConstraints:
+        UNIQ_81398E093931747B:
+            columns:
+                - pesel
+        UNIQ_81398E09E7927C74:
+            columns:
+                - email
+        UNIQ_81398E09444F97DD:
+            columns:
+                - phone
+        UNIQ_81398E09E2F35FF3:
+            columns:
+                - phone2
+    id:
+        id:
+            type: integer
+            nullable: false
+            unsigned: false
+            comment: ''
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        name:
+            type: string
+            nullable: false
+            length: 32
+            fixed: false
+            comment: ''
+        surname:
+            type: string
+            nullable: false
+            length: 32
+            fixed: false
+            comment: ''
+        pesel:
+            type: string
+            nullable: false
+            length: 16
+            fixed: false
+            comment: ''
+        email:
+            type: string
+            nullable: false
+            length: 64
+            fixed: false
+            comment: ''
+        phone:
+            type: string
+            nullable: true
+            length: 16
+            fixed: false
+            comment: ''
+        phone2:
+            type: string
+            nullable: true
+            length: 16
+            fixed: false
+            comment: ''
+        description:
+            type: text
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+        type:
+            type: smallint
+            nullable: true
+            unsigned: false
+            comment: ''
+        source:
+            type: smallint
+            nullable: true
+            unsigned: false
+            comment: ''
+        sourceType:
+            type: smallint
+            nullable: true
+            unsigned: false
+            comment: ''
+            column: source_type
+        createdAt:
+            type: datetime
+            nullable: false
+            comment: ''
+            column: created_at
+        sellerId:
+            type: smallint
+            nullable: false
+            unsigned: false
+            comment: ''
+            column: seller_id
+        gender:
+            type: string
+            nullable: true
+            length: null
+            fixed: false
+            comment: ''
+    lifecycleCallbacks: {  }

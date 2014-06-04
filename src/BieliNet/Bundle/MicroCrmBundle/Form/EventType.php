@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class CustomerType extends AbstractType
+class EventType extends AbstractType
 {
         /**
      * @param FormBuilderInterface $builder
@@ -15,29 +15,22 @@ class CustomerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('sellerId')
-            ->add('name')
-            ->add('surname')
-            ->add('pesel')
-            ->add('email')
-            ->add('phone')
-            ->add('customerType')
-//            ->add('phone2')
-//            ->add('description')
-//            ->add('type')
-//            ->add('source')
-//            ->add('sourceType')
-//            ->add('createdAt')
+//            ->add('customerId')
+//            ->add('eventTypeId')
+            ->add('description')
+            ->add('createdAt')
+            ->add('customer')
+            ->add('eventType')
         ;
     }
-
+    
     /**
      * @param OptionsResolverInterface $resolver
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'BieliNet\Bundle\MicroCrmBundle\Entity\Customer'
+            'data_class' => 'BieliNet\Bundle\MicroCrmBundle\Entity\Event'
         ));
     }
 
@@ -46,6 +39,6 @@ class CustomerType extends AbstractType
      */
     public function getName()
     {
-        return 'bielinet_bundle_microcrmbundle_customer';
+        return 'bielinet_bundle_microcrmbundle_event';
     }
 }
