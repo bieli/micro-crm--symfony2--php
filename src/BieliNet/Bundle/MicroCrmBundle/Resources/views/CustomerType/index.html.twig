@@ -4,6 +4,10 @@
 {{ parent() }} - {{ 'views.index.list'|trans({'%entity%': 'CustomerType'}, 'JordiLlonchCrudGeneratorBundle') }}
 {% endblock %}
 
+{% block menu %}
+{{ include('BieliNetMicroCrmBundle::menu.html.twig') }}
+{% endblock %}
+
 {% block page %}
 
 <div class="row">

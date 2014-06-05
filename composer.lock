@@ -737,12 +737,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/jordillonch/CrudGeneratorBundle.git",
-                "reference": "abaa44761384f11b2504f21e1707028ff6e14999"
+                "reference": "5ab8e616342b55db0a985226e8b588c6696598bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jordillonch/CrudGeneratorBundle/zipball/abaa44761384f11b2504f21e1707028ff6e14999",
-                "reference": "abaa44761384f11b2504f21e1707028ff6e14999",
+                "url": "https://api.github.com/repos/jordillonch/CrudGeneratorBundle/zipball/5ab8e616342b55db0a985226e8b588c6696598bd",
+                "reference": "5ab8e616342b55db0a985226e8b588c6696598bd",
                 "shasum": ""
             },
             "require": {
@@ -782,7 +782,7 @@
                 "crud",
                 "generator"
             ],
-            "time": "2014-03-07 22:05:35"
+            "time": "2014-06-05 06:52:40"
         },
         {
             "name": "knplabs/knp-components",
@@ -1282,12 +1282,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phiamo/MopaBootstrapBundle.git",
-                "reference": "04c2a901ca44299a841a36f5e54c0d122917615b"
+                "reference": "8909c56e2ea3daf064da311b3d552a89ad4d7b2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/04c2a901ca44299a841a36f5e54c0d122917615b",
-                "reference": "04c2a901ca44299a841a36f5e54c0d122917615b",
+                "url": "https://api.github.com/repos/phiamo/MopaBootstrapBundle/zipball/8909c56e2ea3daf064da311b3d552a89ad4d7b2b",
+                "reference": "8909c56e2ea3daf064da311b3d552a89ad4d7b2b",
                 "shasum": ""
             },
             "require": {
@@ -1339,7 +1339,7 @@
                 "form",
                 "template"
             ],
-            "time": "2014-05-19 20:03:35"
+            "time": "2014-06-05 13:28:11"
         },
         {
             "name": "mopa/bootstrap-sandbox-bundle",

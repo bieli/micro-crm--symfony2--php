@@ -1,0 +1,50 @@
+{% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
+
+{% block menu %}
+<nav class="navbar navbar-default" role="navigation">
+   <div class="navbar-header">
+      <a class="navbar-brand" href=" {{ path('customer') }} ">MICRO-CRM</a>
+   </div>
+   <div>
+      <ul class="nav navbar-nav">
+         <li class="first"><a href="{{ path('customer') }}">Klienci</a></li>
+         <li><a href="{{ path('event', {'filter_action':'reset'})}}">Zdarzenia</a></li>
+         <li><a href="{{ path('seller') }}">Sprzedawcy</a></li>
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Produkty 
+               <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="{{ path('customer') }}">Grupy produktowe</a></li>
+               <li class="divider"></li>
+               <li><a href="{{ path('customertype') }}">Dostawcy (Banki)</a></li>
+               <li class="divider"></li>
+            </ul>
+         </li>
+         <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+               Słowniki 
+               <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+               <li><a href="{{ path('customertype') }}">Typy klientów</a></li>
+               <li class="divider"></li>
+               <li><a href="{{ path('eventtype') }}">Typy zdarzeń</a></li>
+               <li class="divider"></li>
+            </ul>
+         </li>
+      </ul>
+
+    <form class="navbar-form navbar-left" role="search" action="{{ path('customer') }}">
+      <div class="form-group">
+        <input maxlength="32" name="find_cutomer" type="text" class="form-control" placeholder="Szukaj klienta">
+        <input maxlength="32" name="find_product" type="text" class="form-control" placeholder="Szukaj produktu">
+       <button type="submit" class="btn btn-default">Szukaj</button>
+      </div>
+    </form>
+
+   </div>
+</nav>
+{% endblock %}
+

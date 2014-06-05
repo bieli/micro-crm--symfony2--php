@@ -4,6 +4,10 @@
 {{ parent() }} - {{ 'views.show.show'|trans({'%entity%': 'Event'}, 'JordiLlonchCrudGeneratorBundle') }}
 {% endblock %}
 
+{% block menu %}
+{{ include('BieliNetMicroCrmBundle::menu.html.twig') }}
+{% endblock %}
+
 {% block page %}
 
 <h1>Event</h1>

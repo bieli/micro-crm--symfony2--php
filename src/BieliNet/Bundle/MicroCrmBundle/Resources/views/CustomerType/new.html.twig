@@ -4,6 +4,10 @@
 {{ parent() }} - {{ 'views.new.creation'|trans({'%entity%': 'CustomerType'}, 'JordiLlonchCrudGeneratorBundle') }}
 {% endblock %}
 
+{% block menu %}
+{{ include('BieliNetMicroCrmBundle::menu.html.twig') }}
+{% endblock %}
+
 {% block page %}
 
 <h1>{{ 'views.new.creation'|trans({'%entity%': 'CustomerType'}, 'JordiLlonchCrudGeneratorBundle') }}</h1>

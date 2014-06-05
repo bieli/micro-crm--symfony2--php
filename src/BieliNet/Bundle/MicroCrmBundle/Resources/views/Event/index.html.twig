@@ -4,6 +4,10 @@
 {{ parent() }} - {{ 'views.index.list'|trans({'%entity%': 'Event'}, 'JordiLlonchCrudGeneratorBundle') }}
 {% endblock %}
 
+{% block menu %}
+{{ include('BieliNetMicroCrmBundle::menu.html.twig') }}
+{% endblock %}
+
 {% block page %}
 
 <div class="row">
@@ -53,7 +57,7 @@
     <thead>
         <tr>
             <th>Id</th>
-            <th>Customerid</th>
+            <th>Customer</th>
             <th>Eventtype</th>
             <th>Description</th>
             <th>Createdat</th>
@@ -64,7 +68,7 @@
     {% for entity in entities %}
         <tr>
             <td><a href="{{ path('event_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{ entity.customerId }}</td>
+            <td>{{ entity.customer }}</td>
             <td>{{ entity.eventType }}</td>
             <td>{{ entity.description }}</td>
             <td>{% if entity.createdAt %}{{ entity.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
