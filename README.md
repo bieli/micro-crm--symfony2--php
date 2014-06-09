@@ -3,6 +3,18 @@ micro-crm--symfony2--php
 
 CRM like application -> practical experiment with Symfony2 PHP framework & CRUDs
 
+Deployment steps
+----------------
+git remote update
+git stash
+git pull --rebase
+git stash pop
+php53 ~/bin/composer.phar update
+php54 app/console --env=prod cache:clear
+php54 app/console --env=prod assetic:dump
+php54 app/console --env=prod assets:install web
+php53 app/console doctrine:schema:update --dump-sql
+php53 app/console doctrine:schema:update --force
 
 Preparing assets
 ----------------
