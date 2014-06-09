@@ -1,0 +1,106 @@
+{% extends 'JordiLlonchCrudGeneratorBundle::layout.html.twig' %}
+
+{% block title %}
+{{ parent() }} - {{ 'views.show.show'|trans({'%entity%': 'Product'}, 'JordiLlonchCrudGeneratorBundle') }}
+{% endblock %}
+
+{% block page %}
+
+<h1>Product</h1>
+
+<form class="form-horizontal">
+    <fieldset>        <div class="control-group">
+            <label class="control-label">Id</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.id }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Productgroupid</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.productGroupId }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Providerid</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.providerId }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Name</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.name }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Description</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.description }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Commissionforgranting</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.commissionForGranting }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Insurancetypeid</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.insuranceTypeId }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Insuranceamount</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.insuranceAmount }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Interest_base_rate</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.interestbaserate }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Interestkindid</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.interestKindId }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Interestamount</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.interestAmount }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Interestmargin</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.interestMargin }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Commissionforearlyrepaymentamount</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.commissionForEarlyRepaymentAmount }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Commissionforearlyrepaymentto</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.commissionForEarlyRepaymentTo|date('Y-m-d H:i:s') }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Tranchescount</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.tranchesCount }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Creditamount</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.creditAmount }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Creditagreementdate</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.creditAgreementDate|date('Y-m-d H:i:s') }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Creditstartdate</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.creditStartDate|date('Y-m-d H:i:s') }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Creditperiodinmonths</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.creditPeriodInMonths }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Creditenddate</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.creditEndDate|date('Y-m-d H:i:s') }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Graceperiodforrepaymentofcapitalinmonths</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.gracePeriodForRepaymentOfCapitalInMonths }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Insurancelifeto</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.insuranceLifeTo|date('Y-m-d H:i:s') }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Url</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.url }}</span>            </div>
+        </div>        <div class="control-group">
+            <label class="control-label">Createdat</label>
+            <div class="controls">                <span class="input-xlarge uneditable-input">{{ entity.createdAt|date('Y-m-d H:i:s') }}</span>            </div>
+        </div>    </fieldset>
+</form>
+
+<div>
+    <div class="float-left">
+        <a class="btn" href="{{ path('product') }}">
+            {{ 'views.recordactions.backtothelist'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+        </a>
+    </div>
+    <div class="float-left">
+        <a class="btn btn-primary" href="{{ path('product_edit', { 'id': entity.id }) }}">
+            {{ 'views.recordactions.edit'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}
+        </a>
+    </div>
+    <div class="float-left">
+        <form action="{{ path('product_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+            <button class="btn btn-danger" type="submit" onclick="return confirm('{{ 'views.recordactions.confirm'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}');">{{ 'views.recordactions.delete'|trans({}, 'JordiLlonchCrudGeneratorBundle') }}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
